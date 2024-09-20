@@ -5,8 +5,8 @@ import (
 	"log"
 
 	"github.com/jinzhu/gorm"
+	_ "github.com/jinzhu/gorm/dialects/sqlite"
 	_ "github.com/lib/pq"
-	_ "github.com/linzhu/gorm/dialects/sqlite"
 )
 
 type Database struct {
@@ -26,7 +26,7 @@ func NewDb() *Database {
 
 func NewDbTest() *gorm.DB {
 	dbInstance := NewDb()
-	dbInstance.Env = "Test"
+	dbInstance.Env = "test"
 	dbInstance.DbTypeTest = "sqlite3"
 	dbInstance.DsnTest = ":memory:"
 	dbInstance.AutoMigrateDb = true
@@ -37,10 +37,12 @@ func NewDbTest() *gorm.DB {
 	if err != nil {
 		log.Fatalf("Test db error: %v", err)
 	}
+
 	return connection
 }
 
-func (d *Database) Connect(*gorm.DB, error) {
+func (d *Database) Connect() (*gorm.DB, error) {
+
 	var err error
 
 	if d.Env != "test" {
@@ -63,4 +65,5 @@ func (d *Database) Connect(*gorm.DB, error) {
 	}
 
 	return d.Db, nil
+
 }
