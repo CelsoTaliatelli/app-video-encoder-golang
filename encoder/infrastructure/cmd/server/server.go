@@ -1,13 +1,12 @@
 package main
 
 import (
+	"encoder/application/services"
 	"encoder/infrastructure/database"
 	"encoder/infrastructure/queue"
 	"log"
 	"os"
 	"strconv"
-
-	services "command-line-arguments/home/celso/code/full-cycle/encoder-video-golang/projeto/encoder/application/services/job_worker.go"
 
 	"github.com/joho/godotenv"
 	"github.com/streadway/amqp"
