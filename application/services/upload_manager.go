@@ -33,7 +33,9 @@ func (vu *VideoUpload) UploadObject(objectPath string, client *storage.Client, c
 	}
 
 	wc := client.Bucket(vu.OutputBucket).Object(path[1]).NewWriter(ctx)
-	wc.ACL = []storage.ACLRule{{Entity: storage.AllUsers, Role: storage.RoleReader}}
+	//TODO: verificar doc ACL
+	//2025/02/13 18:05:09 error during the upload: /tmp/76e6443f-a1ba-4e72-84b5-a6df851f2da2/video/avc1/seg-11.m4s. Error: googleapi: Error 400: Cannot insert legacy ACL for an object when uniform bucket-level access is enabled. Read more at https://cloud.google.com/storage/docs/uniform-bucket-level-access, invalid
+	//wc.ACL = []storage.ACLRule{{Entity: storage.AllUsers, Role: storage.RoleReader}}
 
 	if _, err = io.Copy(wc, f); err != nil {
 		return err
